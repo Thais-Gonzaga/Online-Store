@@ -11,6 +11,7 @@ class MainPage extends React.Component {
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
+
         {/* inserir condicional quando tivermos a lógica do resultado da requisição */}
 
       </>
