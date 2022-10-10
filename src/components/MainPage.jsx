@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getProductsFromCategoryAndQuery } from '../services/api';
+import { getProductsFromCategoryAndQuery, getCategories } from '../services/api';
 import ProductCard from './ProductCard';
 
 class MainPage extends React.Component {
@@ -9,7 +9,13 @@ class MainPage extends React.Component {
     this.state = {
       search: '',
       productResult: [],
+      result: [],
     };
+  }
+  
+    async componentDidMount() {
+    const result = await getCategories();
+    this.setState({ result });
   }
 
   handleInputChange = ({ target }) => {
@@ -28,7 +34,7 @@ class MainPage extends React.Component {
   };
 
   render() {
-    const { search, productResult } = this.state;
+    const { search, productResult, result } = this.state;
 
     return (
       <>
@@ -70,7 +76,16 @@ class MainPage extends React.Component {
         <Link data-testid="shopping-cart-button" to="/cart">
           <button type="button"> Carrinho </button>
         </Link>
-        {/* inserir condicional quando tivermos a lógica do resultado da requisição */}
+ 
+        {result.map(({ name, id }) => (
+          <button
+            key={ id }
+            type="button"
+            data-testid="category"
+            name={ name }
+          >
+            {name}
+          </button>))}
       </>
     );
   }
