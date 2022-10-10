@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getProductsFromCategoryAndQuery, getCategories } from '../services/api';
+import CategoryList from './CategoryList';
 import ProductCard from './ProductCard';
 
 class MainPage extends React.Component {
@@ -12,8 +13,8 @@ class MainPage extends React.Component {
       result: [],
     };
   }
-  
-    async componentDidMount() {
+
+  async componentDidMount() {
     const result = await getCategories();
     this.setState({ result });
   }
@@ -33,8 +34,15 @@ class MainPage extends React.Component {
     this.setState({ productResult: results });
   };
 
+  getCategoryResult = async (categoryID) => {
+    const queryResult = await getProductsFromCategoryAndQuery(categoryID, 'nan');
+    const { results } = queryResult;
+    console.log(results);
+    this.setState({ productResult: results });
+  };
+
   render() {
-    const { search, productResult, result } = this.state;
+    const { productResult, result } = this.state;
 
     return (
       <>
@@ -44,14 +52,14 @@ class MainPage extends React.Component {
             type="text"
             name="search"
             id="search-input"
-            onChange={this.handleInputChange}
+            onChange={ this.handleInputChange }
           />
         </label>
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
         <button
-          onClick={this.getQueryResult}
+          onClick={ this.getQueryResult }
           data-testid="query-button"
           type="button"
         >
@@ -64,10 +72,10 @@ class MainPage extends React.Component {
           <div>
             {productResult.map(({ id, price, title, thumbnail }) => (
               <ProductCard
-                key={id}
-                price={price}
-                title={title}
-                img={thumbnail}
+                key={ id }
+                price={ price }
+                title={ title }
+                img={ thumbnail }
               />
             ))}
           </div>
@@ -76,16 +84,17 @@ class MainPage extends React.Component {
         <Link data-testid="shopping-cart-button" to="/cart">
           <button type="button"> Carrinho </button>
         </Link>
- 
+
         {result.map(({ name, id }) => (
-          <button
+          <CategoryList
             key={ id }
-            type="button"
-            data-testid="category"
             name={ name }
-          >
-            {name}
-          </button>))}
+            id={ id }
+            getCategoryResult={ this.getCategoryResult }
+            // getQueryResult = {}
+
+          />
+        ))}
       </>
     );
   }
