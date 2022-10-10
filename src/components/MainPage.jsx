@@ -1,8 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getCategories } from '../services/api';
 
 class MainPage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      // id: '',
+      // name: '',
+      result: [],
+    };
+  }
+
+  async componentDidMount() {
+    const result = await getCategories();
+    this.setState({ result });
+  }
+
   render() {
+    const {
+      // name, id,
+      result } = this.state;
+
     return (
       <>
         <label htmlFor="search-input">
@@ -16,6 +35,15 @@ class MainPage extends React.Component {
           <button type="button"> Carrinho </button>
         </Link>
         {/* inserir condicional quando tivermos a lógica do resultado da requisição */}
+        {result.map(({ name, id }) => (
+          <button
+            key={ id }
+            type="button"
+            data-testid="category"
+            name={ name }
+          >
+            {name}
+          </button>))}
       </>
     );
   }
