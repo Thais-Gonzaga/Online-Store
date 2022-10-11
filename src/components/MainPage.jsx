@@ -76,6 +76,7 @@ class MainPage extends React.Component {
                 price={ price }
                 title={ title }
                 img={ thumbnail }
+                id={ id }
               />
             ))}
           </div>
@@ -91,7 +92,6 @@ class MainPage extends React.Component {
             name={ name }
             id={ id }
             getCategoryResult={ this.getCategoryResult }
-            // getQueryResult = {}
 
           />
         ))}
