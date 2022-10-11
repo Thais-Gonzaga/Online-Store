@@ -30,17 +30,20 @@ class MainPage extends React.Component {
     const { search } = this.state;
     const queryResult = await getProductsFromCategoryAndQuery('nan', search);
     const { results } = queryResult;
+    console.log(results);
     this.setState({ productResult: results });
   };
 
   getCategoryResult = async (categoryID) => {
     const queryResult = await getProductsFromCategoryAndQuery(categoryID, 'nan');
     const { results } = queryResult;
+    console.log(results);
     this.setState({ productResult: results });
   };
 
   render() {
     const { productResult, result } = this.state;
+
     return (
       <>
         <label htmlFor="search-input">
@@ -52,9 +55,11 @@ class MainPage extends React.Component {
             onChange={ this.handleInputChange }
           />
         </label>
+
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
+
         <button
           onClick={ this.getQueryResult }
           data-testid="query-button"
@@ -62,6 +67,7 @@ class MainPage extends React.Component {
         >
           Buscar
         </button>
+
         <Link data-testid="shopping-cart-button" to="/cart">
           <button type="button"> Carrinho </button>
         </Link>
@@ -69,7 +75,7 @@ class MainPage extends React.Component {
         {productResult.length <= 0 ? (
           <p> Nenhum produto foi encontrado </p>
         ) : (
-          <div>
+          <div className="products">
             {productResult.map(({ id, price, title, thumbnail }) => (
               <ProductCard
                 key={ id }
@@ -77,6 +83,7 @@ class MainPage extends React.Component {
                 title={ title }
                 img={ thumbnail }
                 id={ id }
+                addProductCart={ this.addProductCart }
               />
             ))}
           </div>
@@ -88,6 +95,7 @@ class MainPage extends React.Component {
             name={ name }
             id={ id }
             getCategoryResult={ this.getCategoryResult }
+
           />
         ))}
       </>
