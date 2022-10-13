@@ -30,20 +30,17 @@ class MainPage extends React.Component {
     const { search } = this.state;
     const queryResult = await getProductsFromCategoryAndQuery('nan', search);
     const { results } = queryResult;
-    console.log(results);
     this.setState({ productResult: results });
   };
 
   getCategoryResult = async (categoryID) => {
     const queryResult = await getProductsFromCategoryAndQuery(categoryID, 'nan');
     const { results } = queryResult;
-    console.log(results);
     this.setState({ productResult: results });
   };
 
   render() {
     const { productResult, result } = this.state;
-
     return (
       <>
         <label htmlFor="search-input">
@@ -70,6 +67,9 @@ class MainPage extends React.Component {
           <p> Nenhum produto foi encontrado </p>
         ) : (
           <div>
+            <Link data-testid="shopping-cart-button" to="/cart">
+              <button type="button"> Carrinho </button>
+            </Link>
             {productResult.map(({ id, price, title, thumbnail }) => (
               <ProductCard
                 key={ id }
@@ -81,10 +81,6 @@ class MainPage extends React.Component {
             ))}
           </div>
         )}
-
-        <Link data-testid="shopping-cart-button" to="/cart">
-          <button type="button"> Carrinho </button>
-        </Link>
 
         {result.map(({ name, id }) => (
           <CategoryList

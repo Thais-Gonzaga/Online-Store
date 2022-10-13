@@ -3,16 +3,33 @@ import { Link } from 'react-router-dom';
 import { string } from 'prop-types';
 
 class ProductCard extends React.Component {
+  addCart = (ids) => {
+    const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
+    const save = JSON.parse(jasonSave);
+    const verificId = save.some(({ id }) => ids === id);
+    if (!verificId) {
+      save.push(this.props);
+      localStorage.setItem('keyLocalStorage', JSON.stringify(save));
+    }
+  };
+
   render() {
     const { title, price, img, id } = this.props;
     return (
-      <Link to={ `/product/${id}` } data-testid="product-detail-link">
-        <div data-testid="product">
+      <div data-testid="product">
+        <Link to={ `/product/${id}` } data-testid="product-detail-link">
           <img src={ img } alt={ title } />
           <p>{title}</p>
           <p>{price}</p>
-        </div>
-      </Link>
+        </Link>
+        <button
+          type="button"
+          data-testid="product-add-to-cart"
+          onClick={ () => this.addCart(id) }
+        >
+          add to cart
+        </button>
+      </div>
     );
   }
 }
