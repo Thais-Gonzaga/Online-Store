@@ -1,20 +1,20 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { bool, string } from 'prop-types';
 
 class SavedReview extends React.Component {
   render() {
     const { email, text, rate1, rate2, rate3, rate4, rate5 } = this.props;
     return (
       <>
-        <h4>{email}</h4>
-        <form action="">
+        <h4 data-testid="review-card-email">{email}</h4>
+        <form action="" data-testid="review-card-rating">
           <input
             type="checkbox"
             id="1-star"
             value="1"
             name="rating"
             checked={ rate1 }
-            data-testid="1-rating"
+            readOnly
           />
           <input
             type="checkbox"
@@ -22,7 +22,7 @@ class SavedReview extends React.Component {
             value="2"
             name="rating"
             checked={ rate2 }
-            data-testid="2-rating"
+            readOnly
 
           />
           <input
@@ -31,7 +31,7 @@ class SavedReview extends React.Component {
             value="3"
             name="rating"
             checked={ rate3 }
-            data-testid="3-rating"
+            readOnly
 
           />
           <input
@@ -40,7 +40,7 @@ class SavedReview extends React.Component {
             value="4"
             name="rating"
             checked={ rate4 }
-            data-testid="4-rating"
+            readOnly
 
           />
           <input
@@ -49,11 +49,11 @@ class SavedReview extends React.Component {
             value="5"
             name="rating"
             checked={ rate5 }
-            data-testid="5-rating"
+            readOnly
 
           />
         </form>
-        <p>{text}</p>
+        <p data-testid="review-card-evaluation">{text}</p>
 
       </>
 
@@ -64,11 +64,11 @@ class SavedReview extends React.Component {
 SavedReview.propTypes = {
   email: string,
   text: string,
-  rate1: string,
-  rate2: string,
-  rate3: string,
-  rate4: string,
-  rate5: string,
+  rate1: bool,
+  rate2: bool,
+  rate3: bool,
+  rate4: bool,
+  rate5: bool,
 
 };
 
