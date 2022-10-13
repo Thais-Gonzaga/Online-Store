@@ -3,11 +3,18 @@ import { bool, string } from 'prop-types';
 
 class SavedReview extends React.Component {
   render() {
-    const { email, text, rate1, rate2, rate3, rate4, rate5 } = this.props;
+    const { email, text, rating, rate1, rate2, rate3, rate4, rate5 } = this.props;
+
     return (
       <>
         <h4 data-testid="review-card-email">{email}</h4>
-        <form action="" data-testid="review-card-rating">
+        <p data-testid="review-card-rating">
+          {' '}
+          Nota:
+          {' '}
+          {rating}
+        </p>
+        <form action="">
           <input
             type="checkbox"
             id="1-star"
@@ -64,6 +71,7 @@ class SavedReview extends React.Component {
 SavedReview.propTypes = {
   email: string,
   text: string,
+  rating: string.isRequired,
   rate1: bool,
   rate2: bool,
   rate3: bool,

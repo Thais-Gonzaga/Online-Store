@@ -18,17 +18,18 @@ class ProductDetails extends React.Component {
     const { match: { params: { idproduct } } } = this.props;
     const product = await getProductById(idproduct);
     const { title, price, id, thumbnail } = product;
-    console.log(title, price, id, thumbnail);
+    // console.log(title, price, id, thumbnail);
     this.setState({
       titleProduct: title,
       priceProduct: price,
       imgProduct: thumbnail,
-      id,
+
     });
   }
 
   render() {
-    const { titleProduct, priceProduct, imgProduct, id } = this.state;
+    const { titleProduct, priceProduct, imgProduct } = this.state;
+    const { match: { params: { idproduct } } } = this.props;
     return (
       <>
         <div data-testid="product">
@@ -44,8 +45,8 @@ class ProductDetails extends React.Component {
         <Link data-testid="shopping-cart-button" to="/cart">
           <button type="button"> Adicionar ao carrinho </button>
         </Link>
-        <ReviewSection id={ id } />
-        {console.log(id)}
+        <ReviewSection id={ idproduct } />
+
       </>
     );
   }

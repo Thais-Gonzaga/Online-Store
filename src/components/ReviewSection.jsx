@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 import SavedReview from './SavedReview';
 
 class ReviewSection extends React.Component {
@@ -21,18 +22,18 @@ class ReviewSection extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props;
-    const idProd = (id);
-    console.log(idProd);
-    if (!JSON.parse(localStorage.getItem(idProd))) {
-      localStorage.setItem(idProd, JSON.stringify([]));
-    }
-
-    const productReviews = JSON.parse(localStorage.getItem(idProd));
-    this.setState((prevState) => ({
-      savedReviews: [...prevState.savedReviews, productReviews],
-    }));
+    this.getsSavedReviews();
   }
+
+  getsSavedReviews = () => {
+    const { id } = this.props;
+    const productReviews = JSON.parse(localStorage.getItem(id));
+    if (productReviews) {
+      this.setState({
+        savedReviews: [...productReviews],
+      });
+    }
+  };
 
   validatesEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
@@ -41,8 +42,6 @@ class ReviewSection extends React.Component {
     if (name === 'rating') {
       this.handlesRating(event.target.value);
     }
-
-    // const value = type === 'checkbox' ? checked : event.target.value;
     this.setState({
       [name]: value,
     });
@@ -112,16 +111,14 @@ class ReviewSection extends React.Component {
 
   savesLocalStorage = () => {
     const { id } = this.props;
-    console.log(id);
     const { savedReviews } = this.state;
-    console.log(savedReviews);
     localStorage.setItem(`${id}`, JSON.stringify(savedReviews));
   };
 
   render() {
     const {
       email,
-      message,
+      text,
       rate1,
       rate2,
       rate3,
@@ -129,7 +126,6 @@ class ReviewSection extends React.Component {
       rate5,
       savedReviews,
       showError } = this.state;
-    console.log(savedReviews);
     return (
 
       <>
@@ -206,7 +202,7 @@ class ReviewSection extends React.Component {
                 placeholder="Mensagem (opcional)"
                 data-testid="product-detail-evaluation"
                 onChange={ this.handleFormChange }
-                value={ message }
+                value={ text }
               />
             </label>
             <button
@@ -219,7 +215,7 @@ class ReviewSection extends React.Component {
             </button>
           </form>
         </div>
-        {savedReviews !== undefined && savedReviews !== []
+        {savedReviews.length > 0
            && savedReviews
              .map((review) => (<SavedReview
                key={ review.email }
@@ -240,5 +236,9 @@ class ReviewSection extends React.Component {
     );
   }
 }
+ReviewSection.propTypes = {
+  id: string.isRequired,
+
+};
 
 export default ReviewSection;
