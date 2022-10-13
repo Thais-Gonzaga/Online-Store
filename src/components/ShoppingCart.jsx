@@ -23,11 +23,12 @@ class ShoppingCart extends React.Component {
   }
 
   changesQtd(action) {
-    this.setState(({ qtd }) => (
-      qtd <= 0 && action === '-'
+    this.setState(({ qtd }) => {
+      if (!qtd && action === '-') return;
+      return (qtd < 0
         ? { qtd }
-        : { qtd: action === '+' ? qtd + 1 : qtd - 1 }
-    ));
+        : { qtd: action === '+' ? qtd + 1 : qtd - 1 });
+    });
   }
 
   remove({ target }) {
@@ -52,7 +53,7 @@ class ShoppingCart extends React.Component {
 
             (
             // ProductCard
-              <div data-testid="product" key={ title }>
+              <div data-testid="product" key={ id }>
                 <img src={ img } alt={ title } />
                 <p data-testid="shopping-cart-product-name">{title}</p>
                 <p>{price}</p>
@@ -70,7 +71,6 @@ class ShoppingCart extends React.Component {
                   type="button"
                   onClick={ () => this.changesQtd('-') }
                   name="subtract"
-                  qtd={ qtd }
                 >
                   -
                 </button>
@@ -82,7 +82,6 @@ class ShoppingCart extends React.Component {
                   type="button"
                   onClick={ () => this.changesQtd('+') }
                   name="add"
-                  qtd={ qtd }
                 >
                   +
                 </button>

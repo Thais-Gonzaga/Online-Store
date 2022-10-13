@@ -30,14 +30,12 @@ class MainPage extends React.Component {
     const { search } = this.state;
     const queryResult = await getProductsFromCategoryAndQuery('nan', search);
     const { results } = queryResult;
-    // console.log(results);
     this.setState({ productResult: results });
   };
 
   getCategoryResult = async (categoryID) => {
     const queryResult = await getProductsFromCategoryAndQuery(categoryID, 'nan');
     const { results } = queryResult;
-    // console.log(results);
     this.setState({ productResult: results });
   };
 

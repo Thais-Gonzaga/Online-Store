@@ -3,24 +3,15 @@ import { Link } from 'react-router-dom';
 import { string } from 'prop-types';
 
 class ProductCard extends React.Component {
-  // adicionado - thais
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
-
-  addCart = () => {
-    // const { id } = target;
-    console.log(this.props);
+  addCart = (ids) => {
     const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
     const save = JSON.parse(jasonSave);
-    save.push(this.props);
-    // const newSave = save.filter(({ id: idSave }) => id !== idSave);
-    // console.log(newSave);
-    localStorage.setItem('keyLocalStorage', JSON.stringify(save));
+    const verificId = save.some(({ id }) => ids === id);
+    if (!verificId) {
+      save.push(this.props);
+      localStorage.setItem('keyLocalStorage', JSON.stringify(save));
+    }
   };
-  // adicionado thais
 
   render() {
     const { title, price, img, id } = this.props;
@@ -30,17 +21,14 @@ class ProductCard extends React.Component {
           <img src={ img } alt={ title } />
           <p>{title}</p>
           <p>{price}</p>
-          {/* adicionado thais */}
         </Link>
         <button
           type="button"
           data-testid="product-add-to-cart"
-          onClick={ this.addCart }
-          // id={ id }
+          onClick={ () => this.addCart(id) }
         >
           add to cart
         </button>
-        {/* adicionado thais */}
       </div>
 
     );
