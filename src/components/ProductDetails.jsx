@@ -7,9 +7,10 @@ class ProductDetails extends React.Component {
   constructor() {
     super();
     this.state = {
-      titleProduct: '',
-      priceProduct: '',
-      imgProduct: '',
+      title: '',
+      price: '',
+      img: '',
+      id: '',
     };
   }
 
@@ -19,29 +20,49 @@ class ProductDetails extends React.Component {
     const { title, price, id, thumbnail } = product;
     console.log(title, price, id, thumbnail);
     this.setState({
-      titleProduct: title,
-      priceProduct: price,
-      imgProduct: thumbnail,
+      title,
+      price,
+      img: thumbnail,
+      id,
     });
   }
 
+  addCart = (ids) => {
+    const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
+    const save = JSON.parse(jasonSave);
+    const verificId = save.some(({ id }) => ids === id);
+    if (!verificId) {
+      save.push(this.state);
+      localStorage.setItem('keyLocalStorage', JSON.stringify(save));
+    }
+  };
+
   render() {
-    const { titleProduct, priceProduct, imgProduct } = this.state;
+    const { title, price, img, id } = this.state;
     return (
       <>
         <div data-testid="product">
           <img
-            src={ imgProduct }
-            alt={ titleProduct }
+            src={ img }
+            alt={ title }
             data-testid="product-detail-image"
           />
-          <p data-testid="product-detail-name">{titleProduct}</p>
-          <p data-testid="product-detail-price">{priceProduct}</p>
+          <p data-testid="product-detail-name">{title}</p>
+          <p data-testid="product-detail-price">{price}</p>
         </div>
 
         <Link data-testid="shopping-cart-button" to="/cart">
-          <button type="button"> Adicionar ao carrinho </button>
+          <button type="button"> Carrinho </button>
         </Link>
+
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          onClick={ () => this.addCart(id) }
+        >
+          Adicionar ao Carrinho
+        </button>
+
       </>
     );
   }

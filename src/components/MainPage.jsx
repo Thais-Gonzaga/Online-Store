@@ -62,14 +62,14 @@ class MainPage extends React.Component {
         >
           Buscar
         </button>
+        <Link data-testid="shopping-cart-button" to="/cart">
+          <button type="button"> Carrinho </button>
+        </Link>
 
         {productResult.length <= 0 ? (
           <p> Nenhum produto foi encontrado </p>
         ) : (
           <div>
-            <Link data-testid="shopping-cart-button" to="/cart">
-              <button type="button"> Carrinho </button>
-            </Link>
             {productResult.map(({ id, price, title, thumbnail }) => (
               <ProductCard
                 key={ id }
