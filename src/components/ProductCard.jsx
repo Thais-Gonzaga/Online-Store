@@ -30,7 +30,6 @@ class ProductCard extends React.Component {
           add to cart
         </button>
       </div>
-
     );
   }
 }
