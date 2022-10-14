@@ -2,11 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
-
 import ReviewSection from './ReviewSection';
-
 import { addProduct } from '../services/addProduct';
-
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -23,7 +20,6 @@ class ProductDetails extends React.Component {
     const { match: { params: { idproduct } } } = this.props;
     const product = await getProductById(idproduct);
     const { title, price, id, thumbnail } = product;
-    
     this.setState({
       title,
       price,
@@ -51,7 +47,6 @@ class ProductDetails extends React.Component {
       <>
         <div data-testid="product">
           <img
-
             src={ img }
             alt={ title }
             data-testid="product-detail-image"
@@ -71,8 +66,7 @@ class ProductDetails extends React.Component {
         >
           Adicionar ao Carrinho
         </button>
-          <ReviewSection id={ idproduct } />
-
+        <ReviewSection id={ idproduct } />
 
       </>
     );
