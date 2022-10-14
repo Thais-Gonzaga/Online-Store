@@ -83,7 +83,7 @@ class MainPage extends React.Component {
                 title={ title }
                 img={ thumbnail }
                 id={ id }
-                addProductCart={ this.addProductCart }
+
               />
             ))}
           </div>

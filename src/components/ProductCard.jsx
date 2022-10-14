@@ -11,6 +11,7 @@ class ProductCard extends React.Component {
   render() {
     const { title, price, img, id } = this.props;
     return (
+
       <div data-testid="product">
         <Link to={ `/product/${id}` } data-testid="product-detail-link">
           <img src={ img } alt={ title } />
@@ -25,6 +26,7 @@ class ProductCard extends React.Component {
           add to cart
         </button>
       </div>
+
     );
   }
 }
