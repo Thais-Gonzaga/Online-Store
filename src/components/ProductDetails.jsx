@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
+import { addProduct } from '../services/addProduct';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -18,7 +19,6 @@ class ProductDetails extends React.Component {
     const { match: { params: { idproduct } } } = this.props;
     const product = await getProductById(idproduct);
     const { title, price, id, thumbnail } = product;
-    console.log(title, price, id, thumbnail);
     this.setState({
       title,
       price,
@@ -28,13 +28,14 @@ class ProductDetails extends React.Component {
   }
 
   addCart = (ids) => {
-    const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
-    const save = JSON.parse(jasonSave);
-    const verificId = save.some(({ id }) => ids === id);
-    if (!verificId) {
-      save.push(this.state);
-      localStorage.setItem('keyLocalStorage', JSON.stringify(save));
-    }
+    // const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
+    // const save = JSON.parse(jasonSave);
+    // const verificId = save.some(({ id }) => ids === id);
+    // if (!verificId) {
+    //   save.push(this.state);
+    //   localStorage.setItem('keyLocalStorage', JSON.stringify(save));
+    // }
+    addProduct(ids, this.state);
   };
 
   render() {
