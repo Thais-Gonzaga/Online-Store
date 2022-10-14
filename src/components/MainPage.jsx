@@ -55,9 +55,11 @@ class MainPage extends React.Component {
             onChange={ this.handleInputChange }
           />
         </label>
+
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
+
         <button
           onClick={ this.getQueryResult }
           data-testid="query-button"
@@ -66,10 +68,14 @@ class MainPage extends React.Component {
           Buscar
         </button>
 
+        <Link data-testid="shopping-cart-button" to="/cart">
+          <button type="button"> Carrinho </button>
+        </Link>
+
         {productResult.length <= 0 ? (
           <p> Nenhum produto foi encontrado </p>
         ) : (
-          <div>
+          <div className="products">
             {productResult.map(({ id, price, title, thumbnail }) => (
               <ProductCard
                 key={ id }
@@ -77,14 +83,11 @@ class MainPage extends React.Component {
                 title={ title }
                 img={ thumbnail }
                 id={ id }
+
               />
             ))}
           </div>
         )}
-
-        <Link data-testid="shopping-cart-button" to="/cart">
-          <button type="button"> Carrinho </button>
-        </Link>
 
         {result.map(({ name, id }) => (
           <CategoryList
