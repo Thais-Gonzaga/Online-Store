@@ -1,16 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { string } from 'prop-types';
+import { addProduct } from '../services/addProduct';
 
 class ProductCard extends React.Component {
   addCart = (ids) => {
-    const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
-    const save = JSON.parse(jasonSave);
-    const verificId = save.some(({ id }) => ids === id);
-    if (!verificId) {
-      save.push(this.props);
-      localStorage.setItem('keyLocalStorage', JSON.stringify(save));
-    }
+    addProduct(ids, this.props);
   };
 
   render() {
