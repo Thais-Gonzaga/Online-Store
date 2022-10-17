@@ -16,14 +16,14 @@ class ProductCard extends React.Component {
         <Link to={ `/product/${id}` } data-testid="product-detail-link">
           <img src={ img } alt={ title } />
           <p>{title}</p>
-          <p>{price}</p>
+          <p>{`Preço: R$ ${price}`}</p>
         </Link>
         <button
           type="button"
           data-testid="product-add-to-cart"
           onClick={ () => this.addCart(id) }
         >
-          add to cart
+          adicionar ao carrinho
         </button>
       </div>
 
