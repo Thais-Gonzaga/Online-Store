@@ -46,7 +46,10 @@ class Checkout extends Component {
   };
 
   onSave = () => {
-    if (this.verificInput()) this.setState({ toHome: true });
+    if (this.verificInput()) {
+      this.setState({ toHome: true });
+      localStorage.clear();
+    }
     this.setState({ disabled: false });
   };
 
