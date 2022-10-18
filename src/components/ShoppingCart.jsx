@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { addProduct } from '../services/addProduct';
 import { removeProduct } from '../services/removeProduct';
 
@@ -55,7 +56,7 @@ class ShoppingCart extends React.Component {
               <div data-testid="product" key={ id }>
                 <img src={ img } alt={ title } />
                 <p data-testid="shopping-cart-product-name">{title}</p>
-                <p>{price}</p>
+                <p>{`Preço: R$${price}`}</p>
 
                 <button
                   data-testid="remove-product"
@@ -88,6 +89,16 @@ class ShoppingCart extends React.Component {
             )
 
           ))}
+        <Link
+          to="/checkout"
+          data-testid="checkout-products"
+        >
+          <button
+            type="button"
+          >
+            Finalizar compra
+          </button>
+        </Link>
 
       </div>
     );
