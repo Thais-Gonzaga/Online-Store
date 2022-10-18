@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
 import ReviewSection from './ReviewSection';
 import { addProduct } from '../services/addProduct';
+import ButtonCart from './ButtonCart';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -29,13 +29,6 @@ class ProductDetails extends React.Component {
   }
 
   addCart = (ids) => {
-    // const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
-    // const save = JSON.parse(jasonSave);
-    // const verificId = save.some(({ id }) => ids === id);
-    // if (!verificId) {
-    //   save.push(this.state);
-    //   localStorage.setItem('keyLocalStorage', JSON.stringify(save));
-    // }
     addProduct(ids, this.state);
   };
 
@@ -55,9 +48,7 @@ class ProductDetails extends React.Component {
           <p data-testid="product-detail-price">{price}</p>
         </div>
 
-        <Link data-testid="shopping-cart-button" to="/cart">
-          <button type="button"> Carrinho </button>
-        </Link>
+        <ButtonCart />
 
         <button
           data-testid="product-detail-add-to-cart"

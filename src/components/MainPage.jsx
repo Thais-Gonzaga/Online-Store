@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { getProductsFromCategoryAndQuery, getCategories } from '../services/api';
 import CategoryList from './CategoryList';
 import ProductCard from './ProductCard';
+import ButtonCart from './ButtonCart';
 
 class MainPage extends React.Component {
   constructor() {
@@ -30,14 +30,12 @@ class MainPage extends React.Component {
     const { search } = this.state;
     const queryResult = await getProductsFromCategoryAndQuery('nan', search);
     const { results } = queryResult;
-    // console.log(results);
     this.setState({ productResult: results });
   };
 
   getCategoryResult = async (categoryID) => {
     const queryResult = await getProductsFromCategoryAndQuery(categoryID, 'nan');
     const { results } = queryResult;
-    // console.log(results);
     this.setState({ productResult: results });
   };
 
@@ -68,9 +66,7 @@ class MainPage extends React.Component {
           Buscar
         </button>
 
-        <Link data-testid="shopping-cart-button" to="/cart">
-          <button type="button"> Carrinho </button>
-        </Link>
+        <ButtonCart />
 
         {productResult.length <= 0 ? (
           <p> Nenhum produto foi encontrado </p>

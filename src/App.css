@@ -40,3 +40,26 @@
     transform: rotate(360deg);
   }
 }
+
+.Cart-button button {
+  position: relative;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.Cart-button button span {
+  position: absolute;
+  background-color: #f00;
+  color: #fff;
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  right: -5px;
+  top: -5px;
+}
+
+.Cart-button button img { 
+  width: 30px;
+  height: 30px;
+}
