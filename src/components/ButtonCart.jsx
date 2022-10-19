@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { number } from 'prop-types';
+import { number } from 'prop-types';
 import cartIcon from '../images/cart-shopping-solid.svg';
 
 class ButtonCart extends React.Component {
@@ -18,5 +18,8 @@ class ButtonCart extends React.Component {
     );
   }
 }
+ButtonCart.propTypes = {
+  qtys: number.isRequired,
+};
 
 export default ButtonCart;
