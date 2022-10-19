@@ -8,7 +8,7 @@ export const addProduct = (ids, product) => {
     return null;
   }
   const newSave = save.map((item) => {
-    if (item.id === ids) {
+    if (item.id === ids && item.qty < item.availableQty) {
       item.qty += 1;
     }
     return item;

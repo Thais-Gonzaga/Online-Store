@@ -13,6 +13,7 @@ class ProductDetails extends React.Component {
       price: '',
       img: '',
       id: '',
+      availableQty: 0,
       qtys: 0,
     };
   }
@@ -20,7 +21,7 @@ class ProductDetails extends React.Component {
   async componentDidMount() {
     const { match: { params: { idproduct } } } = this.props;
     const product = await getProductById(idproduct);
-    const { title, price, id, thumbnail } = product;
+    const { title, price, id, thumbnail, availableQty } = product;
     const someQtys = JSON.parse(localStorage.getItem('qtys') || '[]');
     const { qtys } = someQtys;
 
@@ -30,6 +31,7 @@ class ProductDetails extends React.Component {
       img: thumbnail,
       id,
       qtys,
+      availableQty,
     });
   }
 
