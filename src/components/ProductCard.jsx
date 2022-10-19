@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { string } from 'prop-types';
-import { addProduct } from '../services/addProduct';
+// import { addProduct } from '../services/addProduct';
 
 class ProductCard extends React.Component {
-  addCart = (ids) => {
-    addProduct(ids, this.props);
+  add = (ids) => {
+    const { addCart } = this.props;
+    addCart(ids, this.props);
   };
 
   render() {
@@ -21,7 +22,7 @@ class ProductCard extends React.Component {
         <button
           type="button"
           data-testid="product-add-to-cart"
-          onClick={ () => this.addCart(id) }
+          onClick={ () => this.add(id, this.props) }
         >
           adicionar ao carrinho
         </button>

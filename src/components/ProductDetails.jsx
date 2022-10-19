@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
 import ReviewSection from './ReviewSection';
 import { addProduct } from '../services/addProduct';
+import ButtonCart from './ButtonCart';
 
 class ProductDetails extends React.Component {
   constructor() {
@@ -13,6 +13,7 @@ class ProductDetails extends React.Component {
       price: '',
       img: '',
       id: '',
+      qtys: 0,
     };
   }
 
@@ -20,27 +21,27 @@ class ProductDetails extends React.Component {
     const { match: { params: { idproduct } } } = this.props;
     const product = await getProductById(idproduct);
     const { title, price, id, thumbnail } = product;
+    const someQtys = JSON.parse(localStorage.getItem('qtys') || '[]');
+    const { qtys } = someQtys;
+
     this.setState({
       title,
       price,
       img: thumbnail,
       id,
+      qtys,
     });
   }
 
   addCart = (ids) => {
-    // const jasonSave = localStorage.getItem('keyLocalStorage') || '[]';
-    // const save = JSON.parse(jasonSave);
-    // const verificId = save.some(({ id }) => ids === id);
-    // if (!verificId) {
-    //   save.push(this.state);
-    //   localStorage.setItem('keyLocalStorage', JSON.stringify(save));
-    // }
     addProduct(ids, this.state);
+    const products = JSON.parse(localStorage.getItem('keyLocalStorage'));
+    const qtys = products.reduce((acc, { qty }) => acc + qty, 0);
+    this.setState({ qtys });
   };
 
   render() {
-    const { title, price, img, id } = this.state;
+    const { title, price, img, id, qtys } = this.state;
     const { match: { params: { idproduct } } } = this.props;
 
     return (
@@ -55,9 +56,7 @@ class ProductDetails extends React.Component {
           <p data-testid="product-detail-price">{price}</p>
         </div>
 
-        <Link data-testid="shopping-cart-button" to="/cart">
-          <button type="button"> Carrinho </button>
-        </Link>
+        <ButtonCart qtys={ qtys } />
 
         <button
           data-testid="product-detail-add-to-cart"
