@@ -10,7 +10,8 @@ class ProductCard extends React.Component {
   };
 
   render() {
-    const { title, price, img, id } = this.props;
+    const { title, price, img, id, shipping } = this.props;
+    const { free_shipping: free } = shipping;
     return (
 
       <div data-testid="product">
@@ -18,6 +19,7 @@ class ProductCard extends React.Component {
           <img src={ img } alt={ title } />
           <p>{title}</p>
           <p>{`Preço: R$ ${price}`}</p>
+          { free && (<p data-testid="free-shipping">Frete Grátis</p>)}
         </Link>
         <button
           type="button"

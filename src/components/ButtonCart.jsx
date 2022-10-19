@@ -6,6 +6,7 @@ import cartIcon from '../images/cart-shopping-solid.svg';
 class ButtonCart extends React.Component {
   render() {
     const { qtys } = this.props;
+
     return (
       <Link className="Cart-button" data-testid="shopping-cart-button" to="/cart">
         <button type="button">
@@ -19,7 +20,11 @@ class ButtonCart extends React.Component {
   }
 }
 ButtonCart.propTypes = {
-  qtys: number.isRequired,
+  qtys: number,
+};
+
+ButtonCart.defaultProps = {
+  qtys: 0,
 };
 
 export default ButtonCart;
