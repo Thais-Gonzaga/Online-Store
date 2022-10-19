@@ -85,7 +85,13 @@ class MainPage extends React.Component {
           <p> Nenhum produto foi encontrado </p>
         ) : (
           <div className="products">
-            {productResult.map(({ id, price, title, thumbnail }) => (
+            {productResult.map(({
+              id,
+              price,
+              title,
+              thumbnail,
+              available_quantity: availableQty,
+            }) => (
               <ProductCard
                 key={ id }
                 price={ price }
@@ -93,7 +99,7 @@ class MainPage extends React.Component {
                 img={ thumbnail }
                 id={ id }
                 addCart={ this.addCart }
-
+                availableQty={ availableQty }
               />
             ))}
           </div>
