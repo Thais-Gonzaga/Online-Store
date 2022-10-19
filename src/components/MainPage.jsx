@@ -91,6 +91,7 @@ class MainPage extends React.Component {
               title,
               thumbnail,
               available_quantity: availableQty,
+              shipping,
             }) => (
               <ProductCard
                 key={ id }
@@ -100,6 +101,7 @@ class MainPage extends React.Component {
                 id={ id }
                 addCart={ this.addCart }
                 availableQty={ availableQty }
+                shipping={ shipping }
               />
             ))}
           </div>

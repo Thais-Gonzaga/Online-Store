@@ -15,13 +15,14 @@ class ProductDetails extends React.Component {
       id: '',
       availableQty: 0,
       qtys: 0,
+      shipping: {},
     };
   }
 
   async componentDidMount() {
     const { match: { params: { idproduct } } } = this.props;
     const product = await getProductById(idproduct);
-    const { title, price, id, thumbnail, availableQty } = product;
+    const { title, price, id, thumbnail, availableQty, shipping } = product;
     const someQtys = JSON.parse(localStorage.getItem('qtys') || '[]');
     const { qtys } = someQtys;
 
@@ -32,6 +33,7 @@ class ProductDetails extends React.Component {
       id,
       qtys,
       availableQty,
+      shipping,
     });
   }
 
@@ -43,8 +45,9 @@ class ProductDetails extends React.Component {
   };
 
   render() {
-    const { title, price, img, id, qtys } = this.state;
+    const { title, price, img, id, qtys, shipping } = this.state;
     const { match: { params: { idproduct } } } = this.props;
+    const { free_shipping: free } = shipping;
 
     return (
       <>
@@ -57,6 +60,7 @@ class ProductDetails extends React.Component {
           <p data-testid="product-detail-name">{title}</p>
           <p data-testid="product-detail-price">{price}</p>
         </div>
+        { free && (<p data-testid="free-shipping">Frete Grátis</p>)}
 
         <ButtonCart qtys={ qtys } />
 
