@@ -217,8 +217,8 @@ class ReviewSection extends React.Component {
         </div>
         {savedReviews.length > 0
            && savedReviews
-             .map((review) => (<SavedReview
-               key={ review.email }
+             .map((review, index) => (<SavedReview
+               key={ index }
                email={ review.email }
                rating={ review.rating }
                text={ review.text }

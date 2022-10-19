@@ -3,6 +3,7 @@ import { getProductsFromCategoryAndQuery, getCategories } from '../services/api'
 import CategoryList from './CategoryList';
 import ProductCard from './ProductCard';
 import ButtonCart from './ButtonCart';
+import { addProduct } from '../services/addProduct';
 
 class MainPage extends React.Component {
   constructor() {
@@ -11,12 +12,16 @@ class MainPage extends React.Component {
       search: '',
       productResult: [],
       result: [],
+      qtys: 0,
+
     };
   }
 
   async componentDidMount() {
     const result = await getCategories();
-    this.setState({ result });
+    const someQtys = JSON.parse(localStorage.getItem('qtys') || '[]');
+    const { qtys } = someQtys;
+    this.setState({ result, qtys });
   }
 
   handleInputChange = ({ target }) => {
@@ -39,8 +44,16 @@ class MainPage extends React.Component {
     this.setState({ productResult: results });
   };
 
+  addCart = (ids, pro) => {
+    addProduct(ids, pro);
+    const products = JSON.parse(localStorage.getItem('keyLocalStorage'));
+    const qtys = products.reduce((acc, { qty }) => acc + qty, 0);
+    localStorage.setItem('qtys', JSON.stringify({ qtys }));
+    this.setState({ qtys });
+  };
+
   render() {
-    const { productResult, result } = this.state;
+    const { productResult, result, qtys } = this.state;
 
     return (
       <>
@@ -66,7 +79,7 @@ class MainPage extends React.Component {
           Buscar
         </button>
 
-        <ButtonCart />
+        <ButtonCart qtys={ qtys } />
 
         {productResult.length <= 0 ? (
           <p> Nenhum produto foi encontrado </p>
@@ -79,6 +92,7 @@ class MainPage extends React.Component {
                 title={ title }
                 img={ thumbnail }
                 id={ id }
+                addCart={ this.addCart }
 
               />
             ))}

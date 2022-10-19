@@ -13,6 +13,7 @@ class ProductDetails extends React.Component {
       price: '',
       img: '',
       id: '',
+      qtys: 0,
     };
   }
 
@@ -20,20 +21,27 @@ class ProductDetails extends React.Component {
     const { match: { params: { idproduct } } } = this.props;
     const product = await getProductById(idproduct);
     const { title, price, id, thumbnail } = product;
+    const someQtys = JSON.parse(localStorage.getItem('qtys') || '[]');
+    const { qtys } = someQtys;
+
     this.setState({
       title,
       price,
       img: thumbnail,
       id,
+      qtys,
     });
   }
 
   addCart = (ids) => {
     addProduct(ids, this.state);
+    const products = JSON.parse(localStorage.getItem('keyLocalStorage'));
+    const qtys = products.reduce((acc, { qty }) => acc + qty, 0);
+    this.setState({ qtys });
   };
 
   render() {
-    const { title, price, img, id } = this.state;
+    const { title, price, img, id, qtys } = this.state;
     const { match: { params: { idproduct } } } = this.props;
 
     return (
@@ -48,7 +56,7 @@ class ProductDetails extends React.Component {
           <p data-testid="product-detail-price">{price}</p>
         </div>
 
-        <ButtonCart />
+        <ButtonCart qtys={ qtys } />
 
         <button
           data-testid="product-detail-add-to-cart"
